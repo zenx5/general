@@ -1,12 +1,12 @@
 (function(){
     // Config
     const typesDocument = [
-        { label: '#-',      value: '',    length:10  },
-        { label: 'PE-',     value: 'PE',   length:11  },
-        { label: 'E-',      value: 'E',    length:10  },
-        { label: 'N-',      value: 'N',    length:10  },
-        { label: '1AV-',    value: '1AV',  length:12  },
-        { label: '1PI-',    value: '1PI',  length:12  },
+        { label: '#-',      value: '',     length:10, min:0  },
+        { label: 'PE-',     value: 'PE',   length:11, min:2  },
+        { label: 'E-',      value: 'E',    length:10, min:1  },
+        { label: 'N-',      value: 'N',    length:10, min:1  },
+        { label: '1AV-',    value: '1AV',  length:12, min:3  },
+        { label: '1PI-',    value: '1PI',  length:12, min:3  },
     ]
     const selectDocument = document.querySelector('#types-document')
     const inputDocument = document.querySelector('#input-document')
@@ -37,9 +37,22 @@
         while( values.length>0 ) {
             mask = mask.indexOf('#')!==-1 ? mask.replace('#',values.shift()) : mask+values.shift()
         }
-        return mask.replaceAll('#','').replaceAll('--','-')
+        return mask.replaceAll('#','').replaceAll('--','-').replaceAll('-', content.length>0 ? '-' : '')
+    }
+    function validateField(value, min){
+        const errorElement = document.querySelector('#error-document')
+        if( value.length === min ) {
+            errorElement.innerText = 'Este campo es obligatorio'
+            return false
+        }
+        errorElement.innerText = ''
+    }
+    function removeDefault() {
+        const optionDefault = document.querySelector('option[value=""]')
+        if( optionDefault ) optionDefault.remove()
     }
     // Events
+    selectDocument.addEventListener('focus', removeDefault)
     selectDocument.addEventListener('change', function(event){
         const type = typesDocument.find( type => type.value === event.target.value )
         inputDocument.maxLength = parseInt( type.length ) + 2
@@ -48,7 +61,15 @@
         setInput(type.value, type.length)
     })
     inputDocument.addEventListener('input', function(event){
-        if( !event.data ) return
+        const type = typesDocument.find( type => type.value === selectDocument.value )
+        validateField( event.target.value.replaceAll('#','').replaceAll('-',''), type.min )
+        if( !event.data ) {
+            if( event.target.value.length <= type.value.length ) {
+                inputDocument.dataset.realValue = type.value
+                inputDocument.value = applyMask( type.value, createMask( type.length ) )
+            }
+            return
+        }
         if( !/[0-9]/.exec(event.data) ) event.target.value = event.target.value.replace(event.data, '')
 
         inputDocument.dataset.realValue = event.target.value.replaceAll('#','').replaceAll('-','')

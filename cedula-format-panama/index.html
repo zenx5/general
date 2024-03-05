@@ -9,11 +9,15 @@
 <body>
     <form>
         <div class="form">
-            <span style="display: inline-flex;border: 1px solid #a0a0a0;border-radius: 3px;overflow: hidden;align-items: center;justify-content: space-between;gap: 2px;">
-                <select style="background-color: white; border:none" id="types-document">
-                </select>
-                <input type="text" style="outline: none; border:none; padding: 2px;" id="input-document"/>
+            <span style="display:inline-flex; flex-direction:column">
+                <span style="display: inline-flex;border: 1px solid #a0a0a0;border-radius: 3px;overflow: hidden;align-items: center;justify-content: space-between;gap: 2px;">
+                    <select style="background-color: white; border:none; width: 100px;" id="types-document">
+                    </select>
+                    <input type="text" placeholder="cedula" style="outline: none; border:none; padding: 2px;" id="input-document" required/>
+                </span>
+                <small id="error-document" style="padding-left: 4px; padding-top: 4px; color:#d63637"></small>
             </span>
+            <button type="submit" id="submit">Enviar</button>
         </div>
     </form>
     <script src="index.js"></script>
