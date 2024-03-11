@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <input type="checkbox" switch />
     <form>
         <div class="form">
             <span style="display:inline-flex; flex-direction:column">
@@ -19,6 +20,12 @@
             </span>
             <button type="submit" id="submit">Enviar</button>
         </div>
+        <input type="tel" id="a" />
+        <script>
+            document.querySelector('#a').addEventListener('input', function(event){
+                event.target.value = event.target.value.replace(/[^0-9]/g, '')
+            })
+        </script>
     </form>
     <script src="index.js"></script>
 </body>

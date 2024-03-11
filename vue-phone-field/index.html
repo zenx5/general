@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="code_x_length.js"></script>
+    <style>
+        #phone-field {
+            .main-container{
+                &.error{
+                    .input-container{
+                        border: 1px solid red;
+                        box-shadow: 1px 1px 0px red;
+                    }
+                    .error-message {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                        color:red;
+                        font-size: 12px;
+                        margin-top: 5px;
+                        text-align: center;
+                        svg{
+                            width: 10px;
+                            height: 10px;
+                        }
+                    }
+
+                }
+                display: inline-flex;
+                flex-direction: column;
+                .input-container{
+                    border: 1px solid #ccc;
+                    overflow: hidden;
+                    padding: 1px;
+                    box-shadow: 1px 1px 0px #ccc;
+                    border-radius: 5px;
+                    .select-country {
+                        height: 30px;
+                        min-width: 50px;
+                        border: none;
+                        outline: none;
+                    }
+                    .input-phone {
+                        height: 30px;
+                        border: none;
+                        outline: none;
+                    }
+                }
+                .error-message{
+                    display: none;
+                }
+
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="phone-field">
+        <div class="main-container">
+            <div class="input-container">
+                <div class="select-country">
+                    <span></span>
+                    <ul>
+                        <li v-for="country in countries" @click="selectCountry(country)">{{ country.name }}</li>
+                    </ul>
+                </div>
+                <input type="phone" class="input-phone" >
+            </div>
+            <div class="error-message">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                  </svg>
+                <span>{{ message }}</span>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
